@@ -1,0 +1,646 @@
+{
+	"info": {
+		"_postman_id": "401426f1-ab77-4e5c-8908-76d40bca83ab",
+		"name": "Extra top tup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "csn.extra",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/login",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get Country List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-country-list?root_token_id={{root_token_id}}",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-country-list"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Operators",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-international-oper-list?root_token_id={{root_token_id}}&country_code=IT",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-international-oper-list"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						},
+						{
+							"key": "country_code",
+							"value": "IT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Operators Amount",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-service-provider-amount-by-id?root_token_id={{root_token_id}}&manufacturer_id=6&country_code=IT",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-service-provider-amount-by-id"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						},
+						{
+							"key": "manufacturer_id",
+							"value": "6",
+							"description": "for itly operator selection;"
+						},
+						{
+							"key": "country_code",
+							"value": "IT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Mobile Recharge",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}",
+							"type": "text"
+						},
+						{
+							"key": "country_code",
+							"value": "BD",
+							"description": "international operator api (CodicePaese)",
+							"type": "text"
+						},
+						{
+							"key": "operator_code",
+							"value": "EXT-BK",
+							"description": "international operator api  (CodiceOperatore)",
+							"type": "text"
+						},
+						{
+							"key": "number",
+							"value": "+8801797248121",
+							"description": "country code and type number from screen UI",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "4.80",
+							"description": "top up amount (Importo), recharge_amount, from operator amount  api",
+							"type": "text"
+						},
+						{
+							"key": "oper_amount_id",
+							"value": "26",
+							"description": "operator amount response id for italy recharge",
+							"type": "text"
+						},
+						{
+							"key": "fee",
+							"value": "0.200",
+							"description": "extra_fee, from operator amount  api",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/recharge",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"recharge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-balance?root_token_id={{root_token_id}}",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-balance"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. User Info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-user-info?root_token_id={{root_token_id}}",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-user-info"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Recent Top Up",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-recent-top-up?root_token_id={{root_token_id}}&filter_from=01/10/2021&filter_to=28/10/2021&offset=0&limit=10000",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-recent-top-up"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						},
+						{
+							"key": "filter_from",
+							"value": "01/10/2021"
+						},
+						{
+							"key": "filter_to",
+							"value": "28/10/2021"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Movements",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-movements?root_token_id={{root_token_id}}&filter_from=01/10/2021&filter_to=28/10/2021",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-movements"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						},
+						{
+							"key": "filter_from",
+							"value": "01/10/2021"
+						},
+						{
+							"key": "filter_to",
+							"value": "28/10/2021"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Local Currency",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "API-CLIENT",
+						"value": "android",
+						"type": "text"
+					},
+					{
+						"key": "AUTH-TOKEN",
+						"value": "286d22de229a918e30b005f184fa34e8",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer qweqwe213123wadwde23123adas",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{top_up_ysys}}/{{lang}}/v0.1/api/get-local-currency?root_token_id={{root_token_id}}&rate=87&amount=7.91&country_code=BD&operator_code=EXT-BK&fee=3",
+					"host": [
+						"{{top_up_ysys}}"
+					],
+					"path": [
+						"{{lang}}",
+						"v0.1",
+						"api",
+						"get-local-currency"
+					],
+					"query": [
+						{
+							"key": "root_token_id",
+							"value": "{{root_token_id}}"
+						},
+						{
+							"key": "rate",
+							"value": "87",
+							"description": "rate from international operator without intaly"
+						},
+						{
+							"key": "amount",
+							"value": "7.91",
+							"description": "amount that input by user"
+						},
+						{
+							"key": "country_code",
+							"value": "BD",
+							"description": "international/italy operator api  (CodiceOperatore)"
+						},
+						{
+							"key": "operator_code",
+							"value": "EXT-BK",
+							"description": "international/italy operator api  (CodiceOperatore)"
+						},
+						{
+							"key": "fee",
+							"value": "3",
+							"description": "fee base amount from international oeprator"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
