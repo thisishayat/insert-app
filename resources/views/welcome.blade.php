@@ -80,22 +80,7 @@
 
 <div class="container">
 
-    <form class="form-signin" action="/web-sign-up" method="post">
-        <h2 class="form-signin-heading">Please registraion</h2>
-        <label for="inputEmail" class="sr-only">Brac PIN number</label>
-        <h6>Brac PIN number</h6>
-        <input name="username" type="number" id="inputEmail" class="form-control" placeholder="Brac PIN number" required autofocus>
-        <h6>Name</h6>
-        <input name="name" type="text" id="inputEmail" class="form-control" placeholder="Brac PIN number" required autofocus>
-        <h6>Password</h6>
-        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
+
 
 </div> <!-- /container -->
 

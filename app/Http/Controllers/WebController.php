@@ -14,20 +14,21 @@ use Illuminate\Http\Request;
 
 class WebController
 {
-    public function signUp($en,Request $request){
-        $repo = new WebRepository();
-        $retData = $repo->signUp($request);
-        return response()->json($retData);
-    }
+
     public function logIn($en,Request $request){
         $repo = new WebRepository();
         $retData = $repo->logIn($request);
         return response()->json($retData);
     }
-    public function getUserData($en,Request $request){
+    public function getCallData($en,Request $request){
         $repo = new WebRepository();
-        $retData = $repo->getUserData($request);
-        return response()->json($retData);
+        $retData = $repo->getCallData($request);
+        return  $retData;
+    }
+    public function updateStatus($en,Request $request){
+        $repo = new WebRepository();
+        $retData = $repo->updateStatus($request);
+        return  $retData;
     }
 
 }

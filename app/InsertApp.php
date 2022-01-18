@@ -16,5 +16,7 @@ class InsertApp extends Model
         'input_date_time',
         'start_end',
         'remarks',
+        'status',
+        'updated_by',
     ];
 }

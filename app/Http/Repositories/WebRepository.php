@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Repositories;
+use App\InsertApp;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -158,9 +159,55 @@ class WebRepository
 
     }
 
-    public function getUserData($request){
-        $user = Auth::user();
-        return $user;
+    public function getCallData($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $insertApp = new InsertApp();
+            $getData = $insertApp->paginate(3);
+            $getData = $getData->toArray();
+
+            $getComplete = $insertApp->where('status',1)->get()->toArray();
+            $getNotComleted = $insertApp->where('status',0)->get()->toArray();
+            //dd($getData->toArray());
+            return view('call-data-list', ['getData' => $getData,'get_complete'=>count($getComplete),'get_not_complete'=>count($getNotComleted)]);
+        }
+        return redirect()->route('login') ;
+
+    }
+    public function updateStatus($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|numeric',
+                'status' => 'required|numeric',
+            ]);
+            if ($validator->fails()) {
+                return ['status' => 5000, 'get_prodottierror' => $validator->errors()];
+            }
+
+           // dd($input);
+            $insertApp = new InsertApp();
+            $getData = $insertApp->where('id',$input['id'])->update(['status'=>$input['status']]);
+            //dd($getData);
+            if($getData){
+                $getData = $insertApp->where('id',$input['id'])->get()->toArray();
+                $res = [
+                    'status'=>trans('custom.status.success'),
+                    'msg'=>trans('custom.msg.dataSuccess'),
+                    'data_status'=>$getData,
+                ];
+                return $res;
+            }
+            $res = [
+                'status'=>trans('custom.status.failed'),
+                'msg'=>trans('custom.msg.invalid'),
+            ];
+            return  $res;
+
+        }
+        return redirect()->route('login') ;
+
     }
 
 }
