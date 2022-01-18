@@ -10,14 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 Route::get('/registration', function () {
     return view('welcome');
 });
 Route::get('/login', function () {
     return view('login');
-})->name('login');
+});
+
 Route::post('web-sign-up','signUpController@webUserSignp');
 Route::post('{en}/login','WebController@login');
-Route::get('{en}/get-user-data','WebController@getUserData')->middleware('web');
+
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('{en}/get-user-data','WebController@getUserData');
+
+});
 
