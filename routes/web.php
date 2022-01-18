@@ -16,8 +16,8 @@ Route::get('/registration', function () {
 });
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 Route::post('web-sign-up','signUpController@webUserSignp');
-Route::post('login','signUpController@login');
-Route::get('get-user-data','signUpController@getUserData');
+Route::post('{en}/login','WebController@login');
+Route::get('{en}/get-user-data','WebController@getUserData')->middleware('web');
 

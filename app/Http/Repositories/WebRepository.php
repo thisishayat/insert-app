@@ -130,13 +130,12 @@ class WebRepository
             }
             $credentials = array(
                 'username' => $input['username'],
-                'password' => $input['password'],
-                'is_active' => 1,
-                'role' => 1,
+                'password' => $input['password']
             );
             $remember = isset($input['remember']) ? $input['remember'] : false;
 
             if (Auth::attempt($credentials, $remember)) {
+                session('test','123456');
                 $res = [
                     'status'=>trans('custom.status.success'),
                     'msg'=>trans('custom.msg.dataGet'),
@@ -159,6 +158,9 @@ class WebRepository
 
     }
 
-
+    public function getUserData($request){
+        $user = Auth::user();
+        return $user;
+    }
 
 }

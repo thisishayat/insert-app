@@ -18,7 +18,7 @@ class signUpController extends Controller
 {
     /**
      * user sign up
-     * @param Request $request
+     * @param Request $requestlogin
      * @return \Illuminate\Http\JsonResponse
      */
     public function userSignp($en,Request $request)

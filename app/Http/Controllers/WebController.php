@@ -24,5 +24,10 @@ class WebController
         $retData = $repo->logIn($request);
         return response()->json($retData);
     }
+    public function getUserData($en,Request $request){
+        $repo = new WebRepository();
+        $retData = $repo->getUserData($request);
+        return response()->json($retData);
+    }
 
 }

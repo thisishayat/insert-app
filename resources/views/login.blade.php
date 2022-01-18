@@ -11,7 +11,7 @@
     <link rel="icon" href="../../favicon.ico">
     <link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/signin/">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Insert App</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,18 +80,14 @@
 
 <div class="container">
 
-    <form class="form-signin" action="/login" method="post">
-        <h2 class="form-signin-heading">Please registraion</h2>
-        <label for="inputEmail" class="sr-only">Brac PIN number</label>
-        <h6>Brac PIN number</h6>
-        <input name="username" type="number" id="inputEmail" class="form-control" placeholder="Brac PIN number" required autofocus>
+    <form class="form-signin" action="/en/login" method="post">
+        <h2 class="form-signin-heading">Please Login with Username and Password</h2>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <h6>Username</h6>
+        <input name="username" type="text" id="inputEmail" class="form-control" placeholder="Usernae" required autofocus>
         <h6>Password</h6>
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
 
