@@ -18,10 +18,12 @@ class WebController
     public function logIn($en,Request $request){
         $repo = new WebRepository();
         $retData = $repo->logIn($request);
-        return response()->json($retData);
+        return $retData;
     }
-    public function getCallData($en,Request $request){
+    public function getCallData($en,$list_status,Request $request){
         $repo = new WebRepository();
+        $request->offsetSet('list_status', $list_status);
+
         $retData = $repo->getCallData($request);
         return  $retData;
     }

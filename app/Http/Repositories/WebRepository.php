@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use League\Flysystem\Exception;
 
 /**
  * Created by PhpStorm.
@@ -136,12 +137,7 @@ class WebRepository
             $remember = isset($input['remember']) ? $input['remember'] : false;
 
             if (Auth::attempt($credentials, $remember)) {
-                session('test','123456');
-                $res = [
-                    'status'=>trans('custom.status.success'),
-                    'msg'=>trans('custom.msg.dataGet'),
-                    'data' => Auth::user()->toArray(),
-                ];
+                return redirect()->route('get_call_data','en') ;
             } else {
                 $res = [
                     'status'=>trans('custom.status.failed'),
@@ -162,51 +158,84 @@ class WebRepository
     public function getCallData($request){
         $userAuthCheck = Auth::check();
         if($userAuthCheck){
+            $input = $request->input();
             $insertApp = new InsertApp();
-            $getData = $insertApp->paginate(3);
+            if(isset($input['list_status']) && $input['list_status'] == 1){
+                $getData = $insertApp->select()->where(['status'=>1])->orderBy('id','desc')->paginate(1000);
+            }else{
+                $getData = $insertApp->where(['status'=>0])->orderBy('id','desc')->paginate(1000);
+            }
             $getData = $getData->toArray();
-
-            $getComplete = $insertApp->where('status',1)->get()->toArray();
-            $getNotComleted = $insertApp->where('status',0)->get()->toArray();
+//            dd($getData);
+            $result = array();
+            $data =$getData['data'];
+            foreach ($data as $element) {
+                $result[$element['call_receive_number']][] = $element;
+            }
+//dd($result);
+//            $getComplete = $insertApp->where('status',1)->get()->toArray();
+            $getComplete = DB::table('insert_app')->select('call_receive_number')->where('status',1)->distinct()->get();
+            $getNotComleted = DB::table('insert_app')->select('call_receive_number')->where('status',0)->distinct()->get();
             //dd($getData->toArray());
-            return view('call-data-list', ['getData' => $getData,'get_complete'=>count($getComplete),'get_not_complete'=>count($getNotComleted)]);
+            return view('call-data-list', ['result'=>$result,'getData' => $getData,'get_complete'=>count($getComplete->toArray()),'get_not_complete'=>count($getNotComleted->toArray())]);
         }
         return redirect()->route('login') ;
 
     }
     public function updateStatus($request){
-        $userAuthCheck = Auth::check();
-        if($userAuthCheck){
-            $input = $request->input();
-            $validator = Validator::make($request->all(), [
-                'id' => 'required|numeric',
-                'status' => 'required|numeric',
-            ]);
-            if ($validator->fails()) {
-                return ['status' => 5000, 'get_prodottierror' => $validator->errors()];
-            }
+        try{
+            $userAuthCheck = Auth::check();
+            if($userAuthCheck){
+                $input = $request->input();
+                $validator = Validator::make($request->all(), [
+                    'id' => 'required|numeric',
+                    'status' => 'required|numeric',
+                    'call_receive_number' => 'required|numeric',
+                ]);
+                if ($validator->fails()) {
+                    return ['status' => 5000, 'get_prodottierror' => $validator->errors()];
+                }
 
-           // dd($input);
-            $insertApp = new InsertApp();
-            $getData = $insertApp->where('id',$input['id'])->update(['status'=>$input['status']]);
-            //dd($getData);
-            if($getData){
-                $getData = $insertApp->where('id',$input['id'])->get()->toArray();
+                 //dd($input);
+                $insertApp = new InsertApp();
+                $getMobile =  $insertApp->select('call_receive_number')->where('id',$input['id'])->get()->first()->toArray();
+
+                $getData = $insertApp->where('id','<=',$input['id'])->where(['call_receive_number'=>$getMobile,'status'=>0])->update(['status'=>$input['status']]);
+                //dd($getData);
+                if($getData){
+                    $updateCall = $insertApp->where('id',$input['id'])->update(['is_call'=>1]);
+                    $getData = $insertApp->where('id',$input['id'])->get()->toArray();
+                    $res = [
+                        'status'=>trans('custom.status.success'),
+                        'msg'=>trans('custom.msg.dataUpdate'),
+                        'data_status'=>$getData,
+                    ];
+                    return $res;
+                }
                 $res = [
-                    'status'=>trans('custom.status.success'),
-                    'msg'=>trans('custom.msg.dataSuccess'),
+                    'status'=>trans('custom.status.failed'),
+                    'msg'=>trans('custom.msg.dataUpdated'),
                     'data_status'=>$getData,
+                    'req_data'=>$input,
+                    'mobile'=>$request->get('call_receive_number'),
+
                 ];
-                return $res;
+                return  $res;
+
             }
-            $res = [
+            //dd($res);
+            return redirect()->route('login') ;
+        }
+        catch (Exception $e){
+            $retData = [
                 'status'=>trans('custom.status.failed'),
                 'msg'=>trans('custom.msg.invalid'),
+                'error' => $e->getCode()." Message:".$e->getMessage()
             ];
-            return  $res;
-
+            $data =  response()->json($retData,$retData['status']);
+            return $data;
         }
-        return redirect()->route('login') ;
+
 
     }
 

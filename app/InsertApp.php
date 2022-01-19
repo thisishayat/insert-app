@@ -17,6 +17,7 @@ class InsertApp extends Model
         'start_end',
         'remarks',
         'status',
+        'is_call',
         'updated_by',
     ];
 }

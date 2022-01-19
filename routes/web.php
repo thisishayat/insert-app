@@ -23,8 +23,8 @@ Route::post('{en}/login','WebController@login');
 
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('{en}/get-call-data','WebController@getCallData');
-    Route::get('{en}/update-status','WebController@updateStatus');
+    Route::get('{en}/get-call-data/{list_status}','WebController@getCallData')->name('get_call_data');
+    Route::get('{en}/update-status/{list_status}','WebController@updateStatus');
 
 });
 
