@@ -83,6 +83,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/en/get-call-data/1?list_status=1">Completed List</a></li>
                 <li><a href="/en/get-call-data/0?list_status=0">Pending List</a></li>
+                <li><a href="/en/logout">Logout</a></li>
             </ul>
         </div>
     </nav>

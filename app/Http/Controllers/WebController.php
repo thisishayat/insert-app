@@ -32,5 +32,10 @@ class WebController
         $retData = $repo->updateStatus($request);
         return  $retData;
     }
+    public function logout($en,Request $request){
+        $repo = new WebRepository();
+        $retData = $repo->logout($request);
+        return  $retData;
+    }
 
 }

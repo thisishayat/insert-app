@@ -137,7 +137,7 @@ class WebRepository
             $remember = isset($input['remember']) ? $input['remember'] : false;
 
             if (Auth::attempt($credentials, $remember)) {
-                return redirect()->route('get_call_data','en') ;
+                return redirect()->route('get_call_data',['en'=>'en','list_status'=>0]) ;
             } else {
                 $res = [
                     'status'=>trans('custom.status.failed'),
@@ -237,6 +237,16 @@ class WebRepository
         }
 
 
+    }
+
+    public function logout($request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 
 }
