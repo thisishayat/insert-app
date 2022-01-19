@@ -85,7 +85,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
 
-            url: "http://localhost:8000/en/update-status?id="+id+"&status="+status+"&call_receive_number="+call_receive_number,
+            url: "/en/update-status?id="+id+"&status="+status+"&call_receive_number="+call_receive_number,
             method: "GET",
             headers: {
                 "authorization": "Bearer c2bca4367022daf236293e1e98964a60",
