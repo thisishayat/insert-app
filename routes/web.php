@@ -17,6 +17,9 @@ Route::get('/registration', function () {
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+Route::get('/', function () {
+    return view('login');
+})->name('login.home');
 
 Route::post('web-sign-up','signUpController@webUserSignp');
 Route::post('{en}/login','WebController@login');
