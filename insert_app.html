@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    // $.post("http://139.59.61.235:8100/en/v0.1/api/insert-data",
+    $.get("http://localhost:8000/en/v0.1/api/insert-data",
+    {
+      call_number: "01797248122",
+      call_receive_number: "01797248122",
+      date_time: "2012-03-06 17:33:07",
+      start_end: "1",
+      remarks: "test"
+    },
+    function(data,status){
+	console.log(data);
+      alert("\nStatus: " + data.status + "\n" + "call number: " + data.data.call_number  );
+    });
+  });
+});
+</script>
+</head>
+<body>
+
+<button>Send an HTTP POST request</button>
+
+</body>
+</html>
