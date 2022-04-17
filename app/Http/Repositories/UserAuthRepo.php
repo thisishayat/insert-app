@@ -88,6 +88,58 @@ class UserAuthRepo
 
     }
 
+    public function updateStatusApi($request){
+        try{
+                $input = $request->input();
+                $validator = Validator::make($request->all(), [
+                    'call_id' => 'required|numeric|exists:insert_app,id',
+                ]);
+                if ($validator->fails()) {
+                    return ['status' => 500, 'get_prodottierror' => $validator->errors()];
+                }
+
+                //dd($input);
+                $insertApp = new InsertApp();
+                $getMobile =  $insertApp->select('call_receive_number')->where('id',$input['call_id'])->get()->first()->toArray();
+
+                $getData = $insertApp->where('id','<=',$input['call_id'])->where(['call_receive_number'=>$getMobile,'status'=>0])->update(['status'=>1]);
+                //dd($getData);
+                if($getData){
+                    $updateCall = $insertApp->where('id',$input['call_id'])->update(['is_call'=>1]);
+                    $getData = $insertApp->where('id',$input['call_id'])->get()->toArray();
+                    $res = [
+                        'status'=>trans('custom.status.success'),
+                        'msg'=>trans('custom.msg.dataUpdate'),
+                        'data_status'=>$getData,
+                    ];
+                    return $res;
+                }
+                $res = [
+                    'status'=>trans('custom.status.failed'),
+                    'msg'=>trans('custom.msg.dataUpdated'),
+                    'data_status'=>$getData,
+                    'req_data'=>$input,
+                    'mobile'=>$request->get('call_receive_number'),
+
+                ];
+                return  $res;
+
+
+            //dd($res);
+        }
+        catch (Exception $e){
+            $retData = [
+                'status'=>trans('custom.status.failed'),
+                'msg'=>trans('custom.msg.invalid'),
+                'error' => $e->getCode()." Message:".$e->getMessage()
+            ];
+            $data =  response()->json($retData,$retData['status']);
+            return $data;
+        }
+
+
+    }
+
     function curlReq($url, $method = 'GET', $data = [], $PHPSESSID='')
     {
         $query = http_build_query($data);

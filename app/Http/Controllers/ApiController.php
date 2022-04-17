@@ -27,6 +27,12 @@ class ApiController
     }
 
 
+    public function updateStatusApi($en,Request $request){
+        $repo = new UserAuthRepo();
+        $retData = $repo->updateStatusApi($request);
+        return  $retData;
+    }
+
 
 
 }

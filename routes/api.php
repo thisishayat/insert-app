@@ -23,6 +23,8 @@ Route::prefix('/{en}/v0.1/api/')->group(function () {
     //Route::get('get-country-list', 'ApiController@countryList')->name('user.get.single.data');
     Route::post('insert-data', 'ApiController@insertApp')->name('user.root.login');
     Route::get('insert-data', 'ApiController@insertApp')->name('user.root.login');
+    Route::post('update-status-api','ApiController@updateStatusApi');
+
 
 
 
