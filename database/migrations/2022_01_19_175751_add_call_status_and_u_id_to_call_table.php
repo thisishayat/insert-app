@@ -14,7 +14,7 @@ class AddCallStatusAndUIdToCallTable extends Migration
     public function up()
     {
         Schema::table('insert_app', function (Blueprint $table) {
-            $table->smallInteger('is_call')->nullable()->after('status');
+            $table->smallInteger('is_call')->default(0)->after('status');
 
         });
     }

@@ -27,8 +27,15 @@ class UserAuthRepo
     {
 
         try {
+
             $input = $request->input();
-           // dd($input);
+
+            $res = [
+                'status'=>trans('custom.status.failed'),
+                'msg'=>trans('custom.msg.dataInsertFail'),
+            ];
+
+            // dd($input);
             $validator = Validator::make($request->all(), [
                 'call_number' => 'required|numeric',
                 'call_receive_number' => 'required|numeric',
@@ -36,14 +43,23 @@ class UserAuthRepo
             if ($validator->fails()) {
                 return ['status' => trans('custom.status.failed'), 'error' => $validator->errors()];
             }
-            $user = InsertApp::create(
-                [
-                    'call_number' => $input['call_number'],
-                    'call_receive_number' => $input['call_receive_number'],
-                    'input_date_time' => $input['date_time'],
-                    'start_end' => $input['start_end'],
-                    'remarks' =>$input['remarks'],
-                ]);
+            //dd($input);
+
+            $getALlStatus = DB::table('insert_app')->where('call_receive_number',$input['call_receive_number'])->get()->last();
+            //dd();
+            if(is_numeric($getALlStatus->status) && $getALlStatus->status == 1){
+                // status,is_call,updated by default insert 0 , set from DB
+                $user = InsertApp::create(
+                    [
+                        'call_number' => $input['call_number'],
+                        'call_receive_number' => $input['call_receive_number'],
+                        'input_date_time' => $input['date_time'],
+                        'start_end' => $input['start_end'],
+                        'remarks' =>$input['remarks'],
+                    ]);
+
+                // api call here
+
                 if(count($user->toArray())){
                     $res = [
                         'status'=>trans('custom.status.success'),
@@ -52,10 +68,14 @@ class UserAuthRepo
                     ];
                     return $res;
                 }
-            $res = [
-                'status'=>trans('custom.status.failed'),
-                'msg'=>trans('custom.msg.dataInsertFail'),
-            ];
+
+            }else{
+                $res = [
+                    'status'=>trans('custom.status.dbInsertError'),
+                    'msg'=>trans('custom.msg.dataInsertZeroStatus'),
+                ];
+
+            }
 
         } catch (Exception $e) {
             $res = [

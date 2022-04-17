@@ -28,6 +28,7 @@ return [
         'dataExist'=>'Data already exist or duplicate entry. Please try later.',
         'dataUpdated'=>'Data already updated. Please try later or something wrong.',
         'dataInsertFail'=>'Data insert failed. Please try later.',
+        'dataInsertZeroStatus'=>'Data Status 0 Exist. Please try later.',
         'noData'=>'No data found.Please try later.',
         'loginNotSeccess'=>'Login token is not valid.',
         'rechargeFailed'=>'Recharge failed. Insufficient founds or Something Wrong. Please try again.',
