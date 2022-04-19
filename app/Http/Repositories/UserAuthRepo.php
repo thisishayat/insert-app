@@ -79,7 +79,8 @@ class UserAuthRepo
                         'status'=>trans('custom.status.success'),
                         'msg'=>trans('custom.msg.dataSuccess'),
                         'data'=>$CallDataInsert->toArray(),
-                        'helpdeskDataArr'=>$helpDeskDataArray,
+                        'helpdeskDataArrReq'=>$helpDeskDataArray,
+                        'helpdeskRes'=>$ticketCreate,
                     ];
                     DB::commit();
                 }
@@ -190,12 +191,13 @@ class UserAuthRepo
         return $result;
     }
 
-    function creatHelpDeskTicket(){
+    function creatHelpDeskTicket($helpDeskDataArray){
         //dd('dd');
         $url = env('HELPDESK_APP_URL').'/en/v0.1/api/login';
-            $rv = $this->curlReq($url,'POST',['username'=>'hayat','password'=>'132456'],'');
+            $rv = $this->curlReq($url,'POST',$helpDeskDataArray,'');
+           // dd($rv);
             $returnArr = json_decode($rv, true);
-            return $returnArr;
+            return is_null($returnArr) ? $rv : $returnArr;
 
     }
 
