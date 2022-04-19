@@ -54,6 +54,8 @@ class UserAuthRepo
                         'call_receive_number' => $input['call_receive_number'],
                         'input_date_time' => $input['date_time'],
                         'start_end' => $input['start_end'],
+                        'status' => 0,
+                        'is_call' => 0,
                         'remarks' =>$input['remarks'],
                     ]);
 
