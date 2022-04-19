@@ -27,14 +27,11 @@ class UserAuthRepo
     {
 
         try {
-
             $input = $request->input();
-
             $res = [
                 'status'=>trans('custom.status.failed'),
                 'msg'=>trans('custom.msg.dataInsertFail'),
             ];
-
             // dd($input);
             $validator = Validator::make($request->all(), [
                 'call_number' => 'required|numeric',
