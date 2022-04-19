@@ -46,10 +46,12 @@ class UserAuthRepo
             //dd($input);
 
             $getALlStatus = DB::table('insert_app')->where('call_receive_number',$input['call_receive_number'])->get()->last();
-            //dd();
-            if(is_numeric($getALlStatus->status) && $getALlStatus->status == 1){
+            //dd(is_null($getALlStatus));
+         //   dd(is_numeric($getALlStatus->status) , $getALlStatus->status == 1);
+            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
                 // status,is_call,updated by default insert 0 , set from DB
-                $user = InsertApp::create(
+                DB::beginTransaction();
+                $CallDataInsert = InsertApp::create(
                     [
                         'call_number' => $input['call_number'],
                         'call_receive_number' => $input['call_receive_number'],
@@ -59,14 +61,27 @@ class UserAuthRepo
                     ]);
 
                 // api call here
+                $str_arr = explode ("_", $input['remarks']);
+                $getEmail = $this->getEmail($input['call_number']);
+                if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
+                    $helpDeskDataArray = [
+                        'service_id'=>$str_arr[1],
+                        'note'=>$input['call_receive_number'],
+                        'receive_number'=>$input['call_number'],
+                        'call_id'=>$CallDataInsert->id,
+//                      'call_id'=>99,
+                        'email'=>$getEmail,
+                    ];
+                    $ticketCreate=$this->creatHelpDeskTicket($helpDeskDataArray);
+                }
 
-                if(count($user->toArray())){
+                if(count($CallDataInsert->toArray())){
                     $res = [
                         'status'=>trans('custom.status.success'),
                         'msg'=>trans('custom.msg.dataSuccess'),
-                        'data'=>$user->toArray(),
+                        'data'=>$CallDataInsert->toArray(),
                     ];
-                    return $res;
+                    DB::commit();
                 }
 
             }else{
@@ -74,6 +89,7 @@ class UserAuthRepo
                     'status'=>trans('custom.status.dbInsertError'),
                     'msg'=>trans('custom.msg.dataInsertZeroStatus'),
                 ];
+                DB::rollBack();
 
             }
 
@@ -83,9 +99,17 @@ class UserAuthRepo
                 'msg'=>trans('custom.msg.invalid'),
                 'error' => $e->getCode().$e->getMessage()
             ];
+            DB::rollBack();
         }
         return $res;
+    }
 
+    public function getEmail($call_number){
+        $listOfEmaails = [
+            '+8801797248123' => 'hello@gmail.com',
+            '+8801797248122' => 'customer-0@example.com'
+        ];
+        return $listOfEmaails[$call_number];
     }
 
     public function updateStatusApi($request){
@@ -166,59 +190,13 @@ class UserAuthRepo
         return $result;
     }
 
-    function AuthGenerate($input)
-    {
-
-        $data['LoginForm']['username'] = $input['username'];
-        $data['LoginForm']['password'] = $input['password'];
-        $data['yt0'] = 'Login';
-        $url = 'https://app.spaysy.com/frontend/main/login';
-        $method = 'POST';
-
-        $query = http_build_query($data);
-        $ch = curl_init();
-        if ($method == 'GET') {
-            curl_setopt($ch, CURLOPT_URL, $url . $query);
-        } else {
-            curl_setopt($ch, CURLOPT_URL, $url);
-        }
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-        if ($method == 'POST') {
-            curl_setopt($ch, CURLOPT_POST, count($data));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
-        }
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        $result = curl_exec($ch);
-        //dd($result);
-        curl_close($ch);
-        preg_match_all('/login/i', $result, $authCheck);
-        if(count($authCheck[0]) > 0){
-            return ['error' => 'Authentication Failed'];
-        } else {
-            preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
-            $cookies = [];
-            if(isset($matches[1]) && count($matches[1])){
-                $cookies = array();
-                foreach($matches[1] as $item) {
-                    parse_str($item, $cookie);
-                    $cookies = array_merge($cookies, $cookie);
-                }
-
-            }
-            return $cookies;
-        }
-    }
-
-    function getProducts(){
+    function creatHelpDeskTicket(){
         //dd('dd');
-        $url = 'https://app.spaysy.com/backend/rec/get_produttori/?tipo_prodotto=0';
-        if(isset($auth['PHPSESSID'])){
-            $rv = $this->curlReq($url,'GET',[],$auth['PHPSESSID']);
-            $product = json_decode($rv, true);
-            return $product;
-        }
+        $url = env('HELPDESK_APP_URL').'/en/v0.1/api/login';
+            $rv = $this->curlReq($url,'POST',['username'=>'hayat','password'=>'132456'],'');
+            $returnArr = json_decode($rv, true);
+            return $returnArr;
+
     }
 
 
