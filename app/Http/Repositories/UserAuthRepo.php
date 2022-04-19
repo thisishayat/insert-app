@@ -66,7 +66,7 @@ class UserAuthRepo
                     $helpDeskDataArray = [
                         'service_id'=>$str_arr[1],
                         'note'=>$input['call_receive_number'],
-                        'receive_number'=>$input['call_number'],
+                        'receive_number'=>$input['call_receive_number'],
                         'call_id'=>$CallDataInsert->id,
 //                      'call_id'=>99,
                         'email'=>$getEmail,
@@ -79,6 +79,7 @@ class UserAuthRepo
                         'status'=>trans('custom.status.success'),
                         'msg'=>trans('custom.msg.dataSuccess'),
                         'data'=>$CallDataInsert->toArray(),
+                        'helpdeskDataArr'=>$helpDeskDataArray,
                     ];
                     DB::commit();
                 }
