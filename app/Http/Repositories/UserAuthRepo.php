@@ -193,7 +193,7 @@ class UserAuthRepo
 
     function creatHelpDeskTicket($helpDeskDataArray){
         //dd('dd');
-        $url = env('HELPDESK_APP_URL').'/en/v0.1/api/login';
+        $url = env('HELPDESK_APP_URL').'/api/ticket-create';
             $rv = $this->curlReq($url,'POST',$helpDeskDataArray,'');
            // dd($rv);
             $returnArr = json_decode($rv, true);
