@@ -41,6 +41,10 @@ class UserAuthRepo
                 return ['status' => trans('custom.status.failed'), 'error' => $validator->errors()];
             }
             //dd($input);
+            $rcvNumber = $input['call_number'];
+            $callNumber = $input['call_receive_number'];
+            $input['call_receive_number'] = $rcvNumber;
+            $input['call_number'] = $callNumber;
 
             $getALlStatus = DB::table('insert_app')->where('call_receive_number',$input['call_receive_number'])->get()->last();
             //dd(is_null($getALlStatus));
