@@ -107,8 +107,11 @@ class UserAuthRepo
 
     public function getEmail($call_number){
         $listOfEmaails = [
-            '+8801797248123' => 'hello@gmail.com',
-            '+8801797248122' => 'customer-0@example.com'
+            '0280886909' => 'vpaservice@vpaservice.it',
+            '04441497243' => 'csnvicenza@cafcsn.it',
+            '0280886478' => 'helpdesknazionale@cafcsn.it',
+            '0687155140' => 'csnroma@cafcsn.it',
+            '0490990064' => 'csnpadova@cafcsn.it'
         ];
         return $listOfEmaails[$call_number];
     }
