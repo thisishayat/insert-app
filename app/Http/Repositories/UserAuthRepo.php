@@ -45,8 +45,8 @@ class UserAuthRepo
             $getALlStatus = DB::table('insert_app')->where('call_receive_number',$input['call_receive_number'])->get()->last();
             //dd(is_null($getALlStatus));
          //   dd(is_numeric($getALlStatus->status) , $getALlStatus->status == 1);
-            if(true){
-//            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
+//            if(true){
+            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
                 // status,is_call,updated by default insert 0 , set from DB
                 DB::beginTransaction();
                 $CallDataInsert = InsertApp::create(
@@ -64,7 +64,7 @@ class UserAuthRepo
                 $helpDeskDataArray = [];
                 $ticketCreate = [];
                 $str_arr = explode ("_", $input['remarks']);
-               // $getEmail = $this->getEmail($input['call_number']);
+                $getEmail = $this->getEmail($input['call_number']);
                 if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
                     $helpDeskDataArray = [
                         'service_id'=>$str_arr[1],
@@ -72,7 +72,7 @@ class UserAuthRepo
                         'receive_number'=>$input['call_receive_number'],
                         'call_id'=>$CallDataInsert->id,
 //                      'call_id'=>99,
-                      //  'email'=>$getEmail,
+                        'email'=>$getEmail,
                     ];
                     $ticketCreate=$this->creatHelpDeskTicket($helpDeskDataArray);
                 }
@@ -110,11 +110,11 @@ class UserAuthRepo
 
     public function getEmail($call_number){
         $listOfEmaails = [
-            '0280886909' => 'vpaservice@vpaservice.it',
-            '04441497243' => 'csnvicenza@cafcsn.it',
-            '0280886478' => 'helpdesknazionale@cafcsn.it',
-            '0687155140' => 'csnroma@cafcsn.it',
-            '0490990064' => 'csnpadova@cafcsn.it'
+            '+390280886909' => 'vpaservice@vpaservice.it',
+            '+3904441497243' => 'csnvicenza@cafcsn.it',
+            '+395406011904' => 'helpdesknazionale@cafcsn.it',
+            '+390687155140' => 'csnroma@cafcsn.it',
+            '+390490990064' => 'csnpadova@cafcsn.it'
         ];
         return $listOfEmaails[$call_number];
     }
