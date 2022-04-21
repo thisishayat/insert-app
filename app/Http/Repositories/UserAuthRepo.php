@@ -61,6 +61,8 @@ class UserAuthRepo
                     ]);
 
                 // api call here
+                $helpDeskDataArray = [];
+                $ticketCreate = [];
                 $str_arr = explode ("_", $input['remarks']);
                // $getEmail = $this->getEmail($input['call_number']);
                 if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
