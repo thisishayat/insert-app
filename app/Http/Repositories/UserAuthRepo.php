@@ -45,7 +45,8 @@ class UserAuthRepo
             $getALlStatus = DB::table('insert_app')->where('call_receive_number',$input['call_receive_number'])->get()->last();
             //dd(is_null($getALlStatus));
          //   dd(is_numeric($getALlStatus->status) , $getALlStatus->status == 1);
-            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
+            if(true){
+//            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
                 // status,is_call,updated by default insert 0 , set from DB
                 DB::beginTransaction();
                 $CallDataInsert = InsertApp::create(
