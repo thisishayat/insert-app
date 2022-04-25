@@ -174,8 +174,8 @@ class WebRepository
             }
 //dd($result);
 //            $getComplete = $insertApp->where('status',1)->get()->toArray();
-            $getComplete = DB::table('insert_app')->select('call_receive_number')->where('status',1)->distinct()->get();
-            $getNotComleted = DB::table('insert_app')->select('call_receive_number')->where('status',0)->distinct()->get();
+            $getComplete = DB::table('insert_app')->select('call_number')->where('status',1)->distinct()->get();
+            $getNotComleted = DB::table('insert_app')->select('call_number')->where('status',0)->distinct()->get();
             //dd($getData->toArray());
             return view('call-data-list', ['result'=>$result,'getData' => $getData,'get_complete'=>count($getComplete->toArray()),'get_not_complete'=>count($getNotComleted->toArray())]);
         }
