@@ -45,8 +45,9 @@ class UserAuthRepo
             $callNumber = $input['call_receive_number'];
             $input['call_receive_number'] = $rcvNumber;
             $input['call_number'] = $callNumber;
+            $input['remarks'] = "helpdesk_43";
 
-            $getALlStatus = DB::table('insert_app')->where('call_number',$input['call_number'])->get()->last();
+            $getALlStatus = DB::table('insert_app')->where('call_number',$input['call_number'])->where('call_receive_number',$input['call_receive_number'])->get()->last();
             //dd(is_null($getALlStatus));
          //   dd(is_numeric($getALlStatus->status) , $getALlStatus->status == 1);
 //            if(true){
@@ -71,6 +72,7 @@ class UserAuthRepo
                 $ticketCreate = [];
                 $str_arr = explode ("_", $input['remarks']);
                 $getEmail = $this->getEmail($input['call_receive_number']);
+
                 if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
                     $helpDeskDataArray = [
                         'service_id'=>$str_arr[1],
