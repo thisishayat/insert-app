@@ -50,7 +50,9 @@ class UserAuthRepo
             //dd(is_null($getALlStatus));
          //   dd(is_numeric($getALlStatus->status) , $getALlStatus->status == 1);
 //            if(true){
-            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
+            $input['remarks'] = isset($input['remarks']) ? $input['remarks'] :'';
+            if(true){
+//            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
                 // status,is_call,updated by default insert 0 , set from DB
                 DB::beginTransaction();
                 $CallDataInsert = InsertApp::create(
@@ -68,17 +70,17 @@ class UserAuthRepo
                 $helpDeskDataArray = [];
                 $ticketCreate = [];
                 $str_arr = explode ("_", $input['remarks']);
-                $getEmail = $this->getEmail($input['call_number']);
+                //$getEmail = $this->getEmail($input['call_number']);
                 if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
-                    $helpDeskDataArray = [
-                        'service_id'=>$str_arr[1],
-                        'note'=>$input['call_receive_number'],
-                        'receive_number'=>$input['call_receive_number'],
-                        'call_id'=>$CallDataInsert->id,
-//                      'call_id'=>99,
-                        'email'=>$getEmail,
-                    ];
-                    $ticketCreate=$this->creatHelpDeskTicket($helpDeskDataArray);
+//                    $helpDeskDataArray = [
+//                        'service_id'=>$str_arr[1],
+//                        'note'=>$input['call_receive_number'],
+//                        'receive_number'=>$input['call_receive_number'],
+//                        'call_id'=>$CallDataInsert->id,
+////                      'call_id'=>99,
+//                        'email'=>$getEmail,
+//                    ];
+//                    $ticketCreate=$this->creatHelpDeskTicket($helpDeskDataArray);
                 }
 
                 if(count($CallDataInsert->toArray())){
