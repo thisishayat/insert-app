@@ -70,7 +70,6 @@ class UserAuthRepo
                 // api call here
                 $helpDeskDataArray = [];
                 $ticketCreate = [];
-                $str_arr = explode ("_", $input['remarks']);
                 $getEmail = $this->getEmail($input['call_receive_number']);
                 if($input['call_receive_number'] == '+390410980024'){
                     switch($input['start_end']){
@@ -86,7 +85,9 @@ class UserAuthRepo
                     }
                 }
                // dd($input['remarks']);
+                $str_arr = explode ("_", $input['remarks']);
                 if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
+
                     $helpDeskDataArray = [
                         'service_id'=>$str_arr[1],
                         'note'=>$input['call_receive_number'],
@@ -95,6 +96,7 @@ class UserAuthRepo
 //                      'call_id'=>99,
                         'email'=>$getEmail,
                     ];
+//                    dd($helpDeskDataArray);
                     $ticketCreate=$this->creatHelpDeskTicket($helpDeskDataArray);
                 }
 
