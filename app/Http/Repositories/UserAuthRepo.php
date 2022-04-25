@@ -142,7 +142,7 @@ class UserAuthRepo
                 $insertApp = new InsertApp();
                 $getMobile =  $insertApp->select('call_receive_number')->where('id',$input['call_id'])->get()->first()->toArray();
 
-                $getData = $insertApp->where('id','<=',$input['call_id'])->where(['call_receive_number'=>$getMobile,'status'=>0])->update(['status'=>1]);
+                $getData = $insertApp->where('id',$input['call_id'])->where(['status'=>0])->update(['status'=>1]);
                 //dd($getData);
                 if($getData){
                     $updateCall = $insertApp->where('id',$input['call_id'])->update(['is_call'=>1]);
