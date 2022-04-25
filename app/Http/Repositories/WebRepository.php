@@ -170,7 +170,7 @@ class WebRepository
             $result = array();
             $data =$getData['data'];
             foreach ($data as $element) {
-                $result[$element['call_receive_number']][] = $element;
+                $result[$element['call_number']][] = $element;
             }
 //dd($result);
 //            $getComplete = $insertApp->where('status',1)->get()->toArray();
