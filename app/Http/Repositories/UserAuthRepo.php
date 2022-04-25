@@ -72,7 +72,20 @@ class UserAuthRepo
                 $ticketCreate = [];
                 $str_arr = explode ("_", $input['remarks']);
                 $getEmail = $this->getEmail($input['call_receive_number']);
+                if($input['call_receive_number'] == '+390410980024'){
+                    switch($input['start_end']){
+                        case 1:
+                            $input['remarks'] = "helpdesk_43";
+                            break;
+                        case 2:
+                            $input['remarks'] = "helpdesk_44";
+                            break;
+                        default:
+                            $input['remarks'] = "helpdesk_00";
 
+                    }
+                }
+               // dd($input['remarks']);
                 if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
                     $helpDeskDataArray = [
                         'service_id'=>$str_arr[1],
