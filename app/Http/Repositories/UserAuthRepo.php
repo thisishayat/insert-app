@@ -14,6 +14,7 @@ use App\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\UsersNumberSeeder;
 
 class UserAuthRepo
 {
@@ -32,7 +33,6 @@ class UserAuthRepo
                 'status'=>trans('custom.status.failed'),
                 'msg'=>trans('custom.msg.dataInsertFail'),
             ];
-            // dd($input);
             $validator = Validator::make($request->all(), [
                 'call_number' => 'required|numeric',
                 'call_receive_number' => 'required|numeric',
@@ -40,20 +40,15 @@ class UserAuthRepo
             if ($validator->fails()) {
                 return ['status' => trans('custom.status.failed'), 'error' => $validator->errors()];
             }
-            //dd($input);
             $rcvNumber = $input['call_number'];
             $callNumber = $input['call_receive_number'];
             $input['call_receive_number'] = $rcvNumber;
             $input['call_number'] = $callNumber;
-            $input['remarks'] = "helpdesk_43";
 
             $getALlStatus = DB::table('insert_app')->where('call_number',$input['call_number'])->where('call_receive_number',$input['call_receive_number'])->get()->last();
-            //dd(is_null($getALlStatus));
-         //   dd(is_numeric($getALlStatus->status) , $getALlStatus->status == 1);
-//            if(true){
-            $input['remarks'] = isset($input['remarks']) ? $input['remarks'] :'';
-//            if(true){
             if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
+                $getEmail = $this->getEmail($input);
+                $input['remarks'] = isset($getEmail['service_id']) ? 'Helpdesk Service ID '.$getEmail['service_id'] :'';
                 // status,is_call,updated by default insert 0 , set from DB
                 DB::beginTransaction();
                 $CallDataInsert = InsertApp::create(
@@ -66,40 +61,17 @@ class UserAuthRepo
                         'is_call' => 0,
                         'remarks' =>$input['remarks'],
                     ]);
-
-                // api call here
-                $helpDeskDataArray = [];
-                $ticketCreate = [];
-                $getEmail = $this->getEmail($input['call_receive_number']);
-                if($input['call_receive_number'] == '+390410980024'){
-                    switch($input['start_end']){
-                        case 1:
-                            $input['remarks'] = "helpdesk_43";
-                            break;
-                        case 2:
-                            $input['remarks'] = "helpdesk_44";
-                            break;
-                        default:
-                            $input['remarks'] = "helpdesk_00";
-
-                    }
-                }
-               // dd($input['remarks']);
-                $str_arr = explode ("_", $input['remarks']);
-                if(isset($str_arr[0]) && $str_arr[0] == 'helpdesk'){
-
+                if(isset($getEmail['service_id'])){
                     $helpDeskDataArray = [
-                        'service_id'=>$str_arr[1],
+                        'service_id'=>$getEmail['service_id'],
                         'note'=>$input['call_receive_number'],
                         'receive_number'=>$input['call_number'],
                         'call_id'=>$CallDataInsert->id,
 //                      'call_id'=>99,
-                        'email'=>$getEmail,
+                        'email'=>$getEmail['email'],
                     ];
-//                    dd($helpDeskDataArray);
                     $ticketCreate=$this->creatHelpDeskTicket($helpDeskDataArray);
                 }
-
                 if(count($CallDataInsert->toArray())){
                     $res = [
                         'status'=>trans('custom.status.success'),
@@ -117,30 +89,27 @@ class UserAuthRepo
                     'msg'=>trans('custom.msg.dataInsertZeroStatus'),
                 ];
                 DB::rollBack();
-
             }
 
         } catch (Exception $e) {
             $res = [
                 'status'=>trans('custom.status.failed'),
                 'msg'=>trans('custom.msg.invalid'),
-                'error' => $e->getCode().$e->getMessage()
+                'error' => [$e->getLine(), $e->getCode(),$e->getMessage()]
             ];
             DB::rollBack();
         }
         return $res;
     }
 
-    public function getEmail($call_number){
-        $listOfEmaails = [
-            '+390280886909' => 'vpaservice@vpaservice.it',
-            '+390410980024' => 'vpaservice@vpaservice.it', // test
-            '+3904441497243' => 'csnvicenza@cafcsn.it',
-            '+395406011904' => 'helpdesknazionale@cafcsn.it',
-            '+390687155140' => 'csnroma@cafcsn.it',
-            '+390490990064' => 'csnpadova@cafcsn.it'
-        ];
-        return $listOfEmaails[$call_number];
+    public function getEmail($input){
+        $res = [];
+        $userNumModel = new UsersNumberSeeder();
+        $getData = $userNumModel->where(['call_receive_number'=>$input['call_receive_number'],'start_end'=>$input['start_end']])->get()->toArray();
+        if(count($getData) == 1){
+            $res =  $getData[0];
+        }
+        return $res;
     }
 
     public function updateStatusApi($request){
