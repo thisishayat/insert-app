@@ -9,6 +9,7 @@ namespace App\Http\Repositories;
 
 
 
+use App\ApiFailedReq;
 use App\InsertApp;
 use App\User;
 use Exception;
@@ -83,11 +84,22 @@ class UserAuthRepo
                     DB::commit();
                 }
 
-            }else{
+            }
+            else{
+                $input['remarks'] = json_encode($input);
+                $CallDataFailed = ApiFailedReq::create(
+                    [
+                        'call_number_failed_reqs' => $input['call_number'],
+                        'call_receive_number_failed_reqs' => $input['call_receive_number'],
+                        'input_date_time' => $input['date_time'],
+                        'start_end' => $input['start_end'],
+                        'is_call' => 0,
+                        'remarks' =>$input['remarks'],
+                    ]);
                 $res = [
                     'status'=>trans('custom.status.dbInsertError'),
                     'msg'=>trans('custom.msg.dataInsertZeroStatus'),
-                ];
+                    'FailedReq'=>$CallDataFailed->toArray(),                ];
                 DB::rollBack();
             }
 
