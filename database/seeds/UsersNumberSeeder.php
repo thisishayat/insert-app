@@ -36,6 +36,12 @@ class UsersNumberSeeder extends Seeder
             'service_id'=>'36',
         ];
         $rows[] = [
+            'call_receive_number' => '+395406011904',
+            'email' => 'helpdesknazionale@cafcsn.it',
+            'start_end' => '2',
+            'service_id'=>'37',
+        ];
+        $rows[] = [
             'call_receive_number' => '+3904441497243',
             'email' => 'csnvicenza@cafcsn.it',
             'start_end' => '1',
