@@ -100,16 +100,27 @@ class UserAuthRepo
                     'status'=>trans('custom.status.dbInsertError'),
                     'msg'=>trans('custom.msg.dataInsertZeroStatus'),
                     'FailedReq'=>$CallDataFailed->toArray(),                ];
-                DB::rollBack();
+                DB::commit();
             }
 
         } catch (Exception $e) {
+            $input['error'] = $e->getLine()." ".$e->getCode()." ".$e->getMessage();
+            $input['remarks'] = json_encode($input);
+            $CallDataFailed = ApiFailedReq::create(
+                [
+                    'call_number_failed_reqs' => $input['call_number'],
+                    'call_receive_number_failed_reqs' => $input['call_receive_number'],
+                    'input_date_time' => $input['date_time'],
+                    'start_end' => $input['start_end'],
+                    'is_call' => 0,
+                    'remarks' =>$input['remarks'],
+                ]);
             $res = [
                 'status'=>trans('custom.status.failed'),
                 'msg'=>trans('custom.msg.invalid'),
                 'error' => [$e->getLine(), $e->getCode(),$e->getMessage()]
             ];
-            DB::rollBack();
+            DB::commit();
         }
         return $res;
     }
