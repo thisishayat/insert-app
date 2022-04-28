@@ -167,17 +167,17 @@ class WebRepository
             }
             $getData = $getData->toArray();
 //            dd($getData);
-            $result = array();
-            $data =$getData['data'];
-            foreach ($data as $element) {
-                $result[$element['call_number']][] = $element;
-            }
+//            $result = array();
+//            $data =$getData['data'];
+//            foreach ($data as $element) {
+//                $result[$element['call_number']][] = $element;
+//            }
 //dd($result);
 //            $getComplete = $insertApp->where('status',1)->get()->toArray();
             $getComplete = DB::table('insert_app')->select('call_number')->where('status',1)->distinct()->get();
             $getNotComleted = DB::table('insert_app')->select('call_number')->where('status',0)->distinct()->get();
             //dd($getData->toArray());
-            return view('call-data-list', ['result'=>$result,'getData' => $getData,'get_complete'=>count($getComplete->toArray()),'get_not_complete'=>count($getNotComleted->toArray())]);
+            return view('call-data-list', ['result'=>$getData['data'],'getData' => $getData,'get_complete'=>count($getComplete->toArray()),'get_not_complete'=>count($getNotComleted->toArray())]);
         }
         return redirect()->route('login') ;
 

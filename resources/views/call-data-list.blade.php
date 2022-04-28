@@ -16,7 +16,7 @@
                 <th scope="col">id</th>
                 <th scope="col">call_number</th>
                 <th scope="col">call_receive_number</th>
-                <th scope="col">No. of Try</th>
+{{--                <th scope="col">No. of Try</th>--}}
                 <th scope="col">input_date_time</th>
                 <th scope="col">start_end</th>
                 <th scope="col">remarks</th>
@@ -27,20 +27,33 @@
             </tr>
             </thead>
 
-        @foreach($result as $d=>$val)
+        @foreach($result as $val)
         <tr>
-            <th scope="row">{{$val[0]['id']}}</th>
-            <td>{{$val[0]['call_number']}}</td>
-            <td value_id={{$val[0]['call_receive_number']}} id="call_receive_number">{{$val[0]['call_receive_number']}}</td>
-            <td>{{count($val)}}</td>
-            <td>{{$val[0]['input_date_time']}}</td>
-            <td>{{$val[0]['start_end']}}</td>
-            <td>{{$val[0]['remarks']}}</td>
-            <td>{{$val[0]['created_at']}}</td>
-            <td>{{$val[0]['updated_at']}}</td>
-            <td>{{$val[0]['status']}}</td>
+{{--            <th scope="row">{{$val[0]['id']}}</th>--}}
+{{--            <td>{{$val[0]['call_number']}}</td>--}}
+{{--            <td value_id={{$val[0]['call_receive_number']}} id="call_receive_number">{{$val[0]['call_receive_number']}}</td>--}}
+{{--            <td>{{count($val)}}</td>--}}
+{{--            <td>{{$val[0]['input_date_time']}}</td>--}}
+{{--            <td>{{$val[0]['start_end']}}</td>--}}
+{{--            <td>{{$val[0]['remarks']}}</td>--}}
+{{--            <td>{{$val[0]['created_at']}}</td>--}}
+{{--            <td>{{$val[0]['updated_at']}}</td>--}}
+{{--            <td>{{$val[0]['status']}}</td>--}}
 
-            <td><a class="btn btn-primary" role="button"  onclick="updateData({{$val[0]['id']}},1)">Status Update Here</a></td>
+{{--            <td><a class="btn btn-primary" role="button"  onclick="updateData({{$val[0]['id']}},1)">Status Update Here</a></td>--}}
+
+            <th scope="row">{{$val['id']}}</th>
+            <td>{{$val['call_number']}}</td>
+            <td value_id={{$val['call_receive_number']}} id="call_receive_number">{{$val['call_receive_number']}}</td>
+{{--            <td>{{count($val)}}</td>--}}
+            <td>{{$val['input_date_time']}}</td>
+            <td>{{$val['start_end']}}</td>
+            <td>{{$val['remarks']}}</td>
+            <td>{{$val['created_at']}}</td>
+            <td>{{$val['updated_at']}}</td>
+            <td>{{$val['status']}}</td>
+
+            <td><a class="btn btn-primary" role="button"  onclick="updateData({{$val['id']}},1)">Status Update Here</a></td>
 
         </tr>
         @endforeach
