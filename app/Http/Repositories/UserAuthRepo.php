@@ -47,10 +47,16 @@ class UserAuthRepo
             $input['call_number'] = $callNumber;
 
             $getALlStatus = DB::table('insert_app')->where('call_number',$input['call_number'])->where('call_receive_number',$input['call_receive_number'])->get()->last();
-            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1)){
+            if(is_null($getALlStatus) || (is_numeric($getALlStatus->status) && $getALlStatus->status == 1) || ($input['start_end'] == 0)){
                 $getEmail = $this->getEmail($input);
                 $input['remarks'] = isset($getEmail['service_id']) ? 'Helpdesk Service ID '.$getEmail['service_id'] :'';
                 // status,is_call,updated by default insert 0 , set from DB
+                $status = 0;
+                $is_call = 0;
+                if($input['start_end'] == 0){
+                    $status = 1;
+                    $is_call = 1;
+                }
                 DB::beginTransaction();
                 $CallDataInsert = InsertApp::create(
                     [
@@ -58,10 +64,12 @@ class UserAuthRepo
                         'call_receive_number' => $input['call_receive_number'],
                         'input_date_time' => $input['date_time'],
                         'start_end' => $input['start_end'],
-                        'status' => 0,
-                        'is_call' => 0,
+                        'status' => $status,
+                        'is_call' => $is_call,
                         'remarks' =>$input['remarks'],
                     ]);
+                $helpDeskDataArray = [];
+                $ticketCreate = [];
                 if(isset($getEmail['service_id'])){
                     $helpDeskDataArray = [
                         'service_id'=>$getEmail['service_id'],
