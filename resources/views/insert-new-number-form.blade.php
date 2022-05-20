@@ -1,5 +1,5 @@
 
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
     <link rel="icon" href="../../favicon.ico">
     <link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/signin/">
 
-    <title>Call Insert App</title>
+    <title>Insert App</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,8 +27,10 @@
     <script src=".https://getbootstrap.com/docs/3.3/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 <style>
@@ -74,22 +76,29 @@
     }
 </style>
 
+<body>
+
 <div class="container">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Insert App</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="/en/get-call-data/1?list_status=1">Completed List</a></li>
-                <li><a href="/en/get-call-data/0?list_status=0">Pending List</a></li>
-                <li><a href="/en/helpdesk-numbers">Call Number List</a></li>
-                <li><a href="/en/logout">Logout</a></li>
+    @include('header')
 
-            </ul>
+    <form class="form-signin" action="/en/new-number" method="post">
+        <h2 class="form-signin-heading">Insert New Number</h2>
+        <h6>email</h6>
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="email" required autofocus>
+        <h6>call_receive_number</h6>
+        <input name="call_receive_number" type="text" id="call_receive_number" class="form-control" placeholder="call_receive_number" required>
+        <h6>start_end</h6>
+        <input name="start_end" type="number" id="start_end" class="form-control" placeholder="start_end" required>
+        <h6>service_id</h6>
+        <input name="service_id" type="number" id="start_end" class="form-control" placeholder="service_id" required>
 
-        </div>
-    </nav>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+</div> <!-- /container -->
 
 
-</div>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

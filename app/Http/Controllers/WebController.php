@@ -27,6 +27,21 @@ class WebController
         $retData = $repo->getCallData($request);
         return  $retData;
     }
+    public function getNumbersData($en,Request $request){
+        $repo = new WebRepository();
+        $retData = $repo->getNumbersData($request);
+        return  $retData;
+    }
+    public function FormInsertNewNumber($en,Request $request){
+        $repo = new WebRepository();
+        $retData = $repo->FormInsertNewNumber($request);
+        return  $retData;
+    }
+    public function insertNewNumber($en,Request $request){
+        $repo = new WebRepository();
+        $retData = $repo->insertNewNumber($request);
+        return  $retData;
+    }
     public function updateStatus($en,Request $request){
         $repo = new WebRepository();
         $retData = $repo->updateStatus($request);

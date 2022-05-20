@@ -2,6 +2,7 @@
 namespace App\Http\Repositories;
 use App\InsertApp;
 use App\User;
+use App\UsersNumberSeeder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -80,6 +81,48 @@ class WebRepository
             $getNotComleted = DB::table('insert_app')->select('call_number')->where('status',0)->distinct()->get();
             //dd($getData->toArray());
             return view('call-data-list', ['result'=>$getData['data'],'getData' => $getData,'get_complete'=>count($getComplete->toArray()),'get_not_complete'=>count($getNotComleted->toArray())]);
+        }
+        return redirect()->route('login') ;
+
+    }
+
+    public function getNumbersData($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+            $insertApp = new UsersNumberSeeder();
+
+            $getData = $insertApp->where(['is_active'=>1])->orderBy('id','desc')->paginate(1000);
+            $getData = $getData->toArray();
+//            dump($getData);
+            return view('call-number-list', ['result'=>$getData['data'],'getData' => $getData]);
+        }
+        return redirect()->route('login') ;
+
+    }
+    public function insertNewNumber($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+            $insertApp = new UsersNumberSeeder();
+
+            $CallDataInsert = UsersNumberSeeder::create(
+                [
+                    'email' => $input['email'],
+                    'call_receive_number' => $input['call_receive_number'],
+                    'start_end' => $input['start_end'],
+                    'service_id' => $input['service_id'],
+                ]);
+            return redirect()->route('get_numbers',['en'=>'en']) ;
+        }
+        return redirect()->route('login') ;
+
+    }
+    public function FormInsertNewNumber($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+
+            return view('insert-new-number-form');
         }
         return redirect()->route('login') ;
 
