@@ -136,7 +136,7 @@ class UserAuthRepo
     public function getEmail($input){
         $res = [];
         $userNumModel = new UsersNumberSeeder();
-        $getData = $userNumModel->where(['call_receive_number'=>$input['call_receive_number'],'start_end'=>$input['start_end']])->get()->toArray();
+        $getData = $userNumModel->where(['call_receive_number'=>$input['call_receive_number'],'start_end'=>$input['start_end'],'is_active'=>1])->get()->toArray();
         if(count($getData) == 1){
             $res =  $getData[0];
         }
