@@ -37,6 +37,30 @@ class WebController
         $retData = $repo->FormInsertNewNumber($request);
         return  $retData;
     }
+    public function FormEditNumber($en,Request $request,$number_id){
+        $repo = new WebRepository();
+        $request->offsetSet('number_id', $number_id);
+        $retData = $repo->FormEditNumber($request);
+        return  $retData;
+    }
+    public function forDdeleteNumber($en,Request $request,$number_id){
+        $repo = new WebRepository();
+        $request->offsetSet('number_id', $number_id);
+        $retData = $repo->forDdeleteNumber($request);
+        return  $retData;
+    }
+    public function submitEditNumber($en,Request $request,$number_id){
+        $repo = new WebRepository();
+        $request->offsetSet('number_id', $number_id);
+        $retData = $repo->submitEditNumber($request);
+        return  $retData;
+    }
+    public function deleteNumber($en,Request $request,$number_id){
+        $repo = new WebRepository();
+        $request->offsetSet('number_id', $number_id);
+        $retData = $repo->deleteNumber($request);
+        return  $retData;
+    }
     public function insertNewNumber($en,Request $request){
         $repo = new WebRepository();
         $retData = $repo->insertNewNumber($request);

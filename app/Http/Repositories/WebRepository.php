@@ -127,6 +127,64 @@ class WebRepository
         return redirect()->route('login') ;
 
     }
+    public function FormEditNumber($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+            $insertApp = new UsersNumberSeeder();
+
+            $getData = $insertApp->where(['id'=>$input['number_id']])->get()->first();
+            $getData = $getData->toArray();
+//            dd($getData);
+            return view('edit-new-number-form',['getData'=>$getData]);
+        }
+        return redirect()->route('login') ;
+
+    }
+    public function forDdeleteNumber($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+//            dd($getData);
+            return view('delete-number-form',['getData'=>$input]);
+        }
+        return redirect()->route('login') ;
+
+    }
+    public function submitEditNumber($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+           // dd($input);
+            $insertApp = new UsersNumberSeeder();
+
+            $getData = $insertApp->where(['id'=>$input['number_id']])->update([
+                'email'=>$input['email'],
+                'call_receive_number'=>$input['call_receive_number'],
+                'start_end'=>$input['start_end'],
+                'service_id'=>$input['service_id']
+            ]);
+//            $getData = $getData->toArray();
+            return redirect()->route('get_numbers',['en'=>'en']) ;
+        }
+        return redirect()->route('login') ;
+
+    }
+    public function deleteNumber($request){
+        $userAuthCheck = Auth::check();
+        if($userAuthCheck){
+            $input = $request->input();
+           // dd($input);
+            $insertApp = new UsersNumberSeeder();
+            $getData = $insertApp->where(['id'=>$input['number_id']])->update([
+                'is_active'=>0
+            ]);
+//            $getData = $getData->toArray();
+            return redirect()->route('get_numbers',['en'=>'en']) ;
+        }
+        return redirect()->route('login') ;
+
+    }
     public function updateStatus($request){
         try{
             $userAuthCheck = Auth::check();

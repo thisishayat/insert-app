@@ -29,6 +29,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('{en}/get-call-data/{list_status}','WebController@getCallData')->name('get_call_data');
     Route::get('{en}/helpdesk-numbers','WebController@getNumbersData')->name('get_numbers');
     Route::get('{en}/new-number','WebController@FormInsertNewNumber')->name('form_insert_new_number');
+    Route::get('{en}/edit-number/{number_id}','WebController@FormEditNumber')->name('form_edit_new_number');
+    Route::post('{en}/edit-number/{number_id}','WebController@submitEditNumber')->name('submit_form_edit_new_number');
+    Route::get('{en}/delete-number/{number_id}','WebController@forDdeleteNumber')->name('form_delete_new_number');
+    Route::post('{en}/delete-number/{number_id}','WebController@deleteNumber')->name('delete_new_number');
     Route::post('{en}/new-number','WebController@insertNewNumber')->name('insert_new_number');
     Route::get('{en}/update-status','WebController@updateStatus');
     Route::get('{en}/logout','WebController@logout');

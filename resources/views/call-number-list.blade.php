@@ -14,10 +14,8 @@
                 <th scope="col">call_receive_number</th>
                 <th scope="col">start_end</th>
                 <th scope="col">service_id</th>
-                <th scope="col">xxx</th>
-                <th scope="col">xx</th>
-                <th scope="col">xxxx</th>
-                <th scope="col">xxxxxx</th>
+                <th scope="col">edit</th>
+                <th scope="col">delete</th>
             </tr>
             </thead>
         @foreach($result as $val)
@@ -27,10 +25,8 @@
             <td>{{$val['call_receive_number']}}</td>
             <td>{{$val['start_end']}}</td>
             <td>{{$val['service_id']}}</td>
-            <td>xxxxx</td>
-            <td>xxxx</td>
-            <td>xxxx</td>
-            <td>xxxxx</td>
+            <td><a href="/en/edit-number/{{$val['id']}}">Edit</a></td>
+            <td><a href="/en/delete-number/{{$val['id']}}">Delete</a></td>
 
         </tr>
         @endforeach
